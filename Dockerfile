@@ -1,5 +1,11 @@
-FROM ubuntu:22.04
+FROM ubuntu:22.04 as downloader
+WORKDIR /wheels
+RUN apt-get update && apt-get install -y wget
+RUN wget https://download.pytorch.org/whl/cu121/torch-2.5.1%2Bcu121-cp312-cp312-linux_x86_64.whl
+RUN wget https://download.pytorch.org/whl/cu121/torchvision-0.20.1%2Bcu121-cp312-cp312-linux_x86_64.whl
+RUN wget https://download.pytorch.org/whl/cu121/torchaudio-2.5.1%2Bcu121-cp312-cp312-linux_x86_64.whl
 
+FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV IMAGEIO_FFMPEG_EXE=/usr/bin/ffmpeg
@@ -60,7 +66,7 @@ RUN wget https://github.com/zasper-io/zasper/releases/download/v0.1.0-alpha/zasp
     && rm zasper-webapp-linux-amd64.tar.gz
 
 # Install Jupyter with Python kernel
-RUN pip install jupyter
+RUN pip install jupyter virtualenv
 
 # Configure SSH for root login
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
@@ -75,6 +81,7 @@ WORKDIR /workspace/madapps
 EXPOSE 8188 22 8048 8080
 
 # Copy and set up start script
+COPY --from=downloader /wheels /wheels
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
