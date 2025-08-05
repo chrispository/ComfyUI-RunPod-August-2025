@@ -1,17 +1,21 @@
-# Better ComfyUI Slim
+# Better ComfyUI Slim - August 2025 Version
+
+This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was having various issues getting it to run in August 2025, so this version is updated with a working dependency list as of 8/5/2025, and lots of debugging info in the console logs if you run into any issues.
+
+The original version had a 5090 version - I do not. I have no use for those. 
+
+
 
 A compact and optimized Docker container designed as an easy-to-use RunPod template for ComfyUI. Images are highly optimized for size, only ~650MB while including all features!
 
 ## Quick Deploy on RunPod
 
-[![Deploy Regular on RunPod](https://img.shields.io/badge/Deploy%20on%20RunPod-Regular%20(CUDA%2012.4)-4B6BDC?style=for-the-badge&logo=docker)](https://runpod.io/console/deploy?template=cndsag8ob0&ref=vfker49t)
-
-[![Deploy 5090 on RunPod](https://img.shields.io/badge/Deploy%20on%20RunPod-RTX%205090%20(CUDA%2012.8)-1BB91F?style=for-the-badge&logo=docker)](https://runpod.io/console/deploy?template=tm7neqjjww&ref=vfker49t)
+[![Deploy Regular on RunPod](https://img.shields.io/badge/Deploy%20on%20RunPod-Regular%20(CUDA%2012.4)-4B6BDC?style=for-the-badge&logo=docker)](https://runpod.io/console/deploy?template=s5ap6pd6xg)
 
 
 Choose your template:
-- 🖥️ [Regular Template](https://runpod.io/console/deploy?template=cndsag8ob0&ref=vfker49t) - For most GPUs (CUDA 12.4)
-- 🎮 [RTX 5090 Template](https://runpod.io/console/deploy?template=tm7neqjjww&ref=vfker49t) - Optimized for RTX 5090 (CUDA 12.8)
+- 🖥️ [Regular Template](https://runpod.io/console/deploy?template=s5ap6pd6xg) - For most GPUs (CUDA 12.4)
+
 
 ## Why Better ComfyUI Slim?
 
