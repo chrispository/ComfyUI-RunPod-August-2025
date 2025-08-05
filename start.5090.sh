@@ -185,6 +185,7 @@ if [ ! -d "$COMFYUI_DIR" ] || [ ! -d "$VENV_DIR" ]; then
         
         # Install the requirements
         uv pip install --no-cache -r requirements.txt
+        uv pip install --no-cache PyYAML
         
         # Install PyTorch Nightly
         uv pip install --no-cache --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
@@ -258,7 +259,7 @@ fi
 
 # Start ComfyUI with custom arguments if provided
 cd $COMFYUI_DIR
-FIXED_ARGS="--listen 0.0.0.0 --port 8188"
+FIXED_ARGS="--listen 0.0.0.0 --port 8187"
 if [ -s "$ARGS_FILE" ]; then
     # File exists and is not empty, combine fixed args with custom args
     CUSTOM_ARGS=$(grep -v '^#' "$ARGS_FILE" | tr '\n' ' ')

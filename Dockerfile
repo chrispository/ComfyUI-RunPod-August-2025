@@ -66,7 +66,7 @@ RUN wget https://github.com/zasper-io/zasper/releases/download/v0.1.0-alpha/zasp
     && rm zasper-webapp-linux-amd64.tar.gz
 
 # Install Jupyter with Python kernel
-RUN pip install jupyter virtualenv
+RUN pip install jupyter virtualenv uv
 
 # Configure SSH for root login
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
@@ -78,7 +78,7 @@ RUN mkdir -p /workspace/madapps
 WORKDIR /workspace/madapps
 
 # Expose ports
-EXPOSE 8188 22 8048 8080
+EXPOSE 8187 22 8048 8080
 
 # Copy and set up start script
 COPY --from=downloader /wheels /wheels

@@ -40,7 +40,7 @@ Choose your template:
 
 ## Ports
 
-- `8188`: ComfyUI web interface
+- `8187`: ComfyUI web interface
 - `8080`: FileBrowser interface
 - `8048`: Zasper file access
 - `22`: SSH access
