@@ -1,6 +1,10 @@
 #!/bin/bash
 set -ex
 
+echo "##########################################"
+echo "### STEP 1/4: System Initialization    ###"
+echo "##########################################"
+
 COMFYUI_DIR="/workspace/madapps/ComfyUI"
 VENV_DIR="$COMFYUI_DIR/.venv"
 PIP_EXECUTABLE="$VENV_DIR/bin/pip"
@@ -9,42 +13,39 @@ FILEBROWSER_CONFIG="/workspace/madapps/.filebrowser.json"
 
 # Setup ComfyUI if needed
 if [ ! -f "$PIP_EXECUTABLE" ]; then
-    echo "First time setup or corrupted venv: Installing ComfyUI and dependencies..."
-    
-    # Clone ComfyUI if not present
+    echo "First-time setup: ComfyUI or virtual environment not found."
+    echo "Cloning ComfyUI repository..."
     if [ ! -d "$COMFYUI_DIR" ]; then
         cd /workspace/madapps
         git clone https://github.com/comfyanonymous/ComfyUI.git
     fi
     
-    # Create and setup virtual environment
+    echo "Creating Python virtual environment..."
     cd $COMFYUI_DIR
-    # Remove potentially corrupted venv
     rm -rf $VENV_DIR
     virtualenv $VENV_DIR
     
-    # Install dependencies
+    echo "##########################################"
+    echo "### STEP 2/4: Dependency Installation  ###"
+    echo "##########################################"
+    echo "Installing main dependencies (this may take a while)..."
     $PIP_EXECUTABLE install /wheels/*.whl
     
-    # Comment out torch packages from requirements.txt
     sed -i 's/^torch/#torch/' requirements.txt
     sed -i 's/^torchvision/#torchvision/' requirements.txt
     sed -i 's/^torchaudio/#torchaudio/' requirements.txt
     
     $PIP_EXECUTABLE install -r requirements.txt
+else
+    echo "ComfyUI and virtual environment found. Skipping initial setup."
+    echo "##########################################"
+    echo "### STEP 2/4: Dependency Installation  ###"
+    echo "##########################################"
 fi
 
 # Ensure critical packages are installed
-echo "Ensuring critical packages are installed..."
-$PIP_EXECUTABLE install PyYAML
-echo "Listing packages before torchsde install:"
-$PIP_EXECUTABLE list
-echo "Attempting to install torchsde..."
-$PIP_EXECUTABLE install torchsde
-echo "Listing packages after torchsde install:"
-$PIP_EXECUTABLE list
-echo "Verifying torchsde installation..."
-$PYTHON_EXECUTABLE -c "import torchsde; print('torchsde successfully imported')"
+echo "Verifying critical packages..."
+$PIP_EXECUTABLE install PyYAML torchsde
 
 # Install dependencies for custom nodes
 CUSTOM_NODES_DIR="$COMFYUI_DIR/custom_nodes"
@@ -57,6 +58,10 @@ if [ -d "$CUSTOM_NODES_DIR" ]; then
         fi
     done
 fi
+
+echo "##########################################"
+echo "### STEP 3/4: Launching Services       ###"
+echo "##########################################"
 
 # Start supporting services
 echo "Starting SSH daemon..."
@@ -81,10 +86,16 @@ fi
 echo "Starting File Browser in the background..."
 filebrowser -c "$FILEBROWSER_CONFIG" &
 
+echo "Starting Zasper WebApp in the background..."
+zasper-webapp &
+
+echo "##########################################"
+echo "### STEP 4/4: Starting ComfyUI         ###"
+echo "##########################################"
+
 # Start ComfyUI as the main foreground process
-echo "Starting ComfyUI..."
 cd $COMFYUI_DIR
-if ! $PYTHON_EXECUTABLE main.py --listen 0.0.0.0 --port 8187; then
+if ! $PYTHON_EXECUTABLE main.py --listen 0.0.0.0 --port 8188; then
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     echo "!! ComfyUI FAILED TO START. See error above.  !!"
     echo "!! The container will exit in 60 seconds.     !!"
