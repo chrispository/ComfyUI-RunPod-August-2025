@@ -1,48 +1,24 @@
-# Better ComfyUI Slim - August 2025 Version
+# Better ComfyUI Slim - August 2025 Version + Instructions for Newbies
 
-This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was having various issues getting it to run in August 2025, so this version is updated with a working dependency list as of 8/5/2025, and lots of debugging info in the console logs if you run into any issues.
+This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was having various issues getting it to run in August 2025, so this version is hardcoded with a working dependency list as of 8/5/2025, and lots of debugging info in the console logs if you run into any issues.
 
-The original version had a 5090 version - I do not. I have no use for those. 
+The original version had a 5090 version - I do not. I have no use for those. The original version also had a File Browser and Zasper, those have also been left out.
+
+After ComfyUI boots up, RunPod still needs a few minutes for ComfyUI. If you see the message "Using pytorch attention" - just wait about 2 minutes. The final message you will get from the Container Log confirming it's ready is this: "To see the GUI go to: http://0.0.0.0:8188"
+
+I had a lot of questions about downloading and storing models. Originally I was trying to use Cloudflare R2 as storage, but ultimately I could not figure it out. Doing the storage via RunPod makes things a lot easier. Start by making a Network Volume with about 150 GB. You will need to know which sort of GPU you are planning on using because each storage location has certain machines available to it with the storage. In my case I wanted to use A100s, so I chose the Kansas location as that's where the most machines were. 
+
+From now on, any time you start anything on RunPod, start by going to your storage, clicking your new Network Volume, and then clicking Deploy Pod With Volume. The first time you connect with the network volume, it will kick off an install script that might take 30 minutes or so. This is installing ComfyUI to your network volume. As far as downloading the models/safetensors/checkpoints - cURLing via the Web SSH is by far the easiest and most effective method. The easiest way is to just launch ComfyUI, click
 
 
-
-A compact and optimized Docker container designed as an easy-to-use RunPod template for ComfyUI. Images are highly optimized for size, only ~650MB while including all features!
 
 ## Quick Deploy on RunPod
 
 [![Deploy Regular on RunPod](https://img.shields.io/badge/Deploy%20on%20RunPod-Regular%20(CUDA%2012.4)-4B6BDC?style=for-the-badge&logo=docker)](https://runpod.io/console/deploy?template=s5ap6pd6xg)
 
-
-Choose your template:
-- 🖥️ [Regular Template](https://runpod.io/console/deploy?template=s5ap6pd6xg) - For most GPUs (CUDA 12.4)
-
-
-## Why Better ComfyUI Slim?
-
-- 🎯 Purpose-built for RunPod deployments
-- 📦 Ultra-compact: Only ~650MB image size (compared to multi-GB alternatives)
-- 🚀 Zero configuration needed: Works out of the box
-- 🛠️ Includes all essential tools for remote work
-
-## Features
-
-- 🚀 Two optimized variants:
-  - Regular: CUDA 12.4 with stable PyTorch
-  - RTX 5090: CUDA 12.8 with PyTorch Nightly (optimized for latest NVIDIA GPUs)
-- 🔧 Built-in tools:
-  - SSH access
-- 🎨 Pre-installed custom nodes:
-  - ComfyUI-Manager
-  - ComfyUI-Crystools
-  - ComfyUI-KJNodes
-- ⚡ Performance optimizations:
-  - UV package installer for faster dependency installation
-  - NVENC support in FFmpeg
-  - Optimized CUDA configurations
-
 ## Ports
 
-- `8187`: ComfyUI web interface
+- `8188`: ComfyUI web interface
 - `22`: SSH access
 
 ## Custom Arguments
