@@ -9,7 +9,6 @@ COMFYUI_DIR="/workspace/madapps/ComfyUI"
 VENV_DIR="$COMFYUI_DIR/.venv"
 PIP_EXECUTABLE="$VENV_DIR/bin/pip"
 PYTHON_EXECUTABLE="$VENV_DIR/bin/python"
-FILEBROWSER_CONFIG="/workspace/madapps/.filebrowser.json"
 
 # Setup ComfyUI if needed
 if [ ! -f "$PIP_EXECUTABLE" ]; then
@@ -67,27 +66,6 @@ echo "##########################################"
 echo "Starting SSH daemon..."
 /usr/sbin/sshd
 
-# Configure and Start FileBrowser
-if [ ! -f "$FILEBROWSER_CONFIG" ]; then
-    echo "Creating default File Browser config..."
-    cat <<EOF > "$FILEBROWSER_CONFIG"
-{
-  "port": 8080,
-  "address": "0.0.0.0",
-  "root": "/workspace/madapps",
-  "database": "/workspace/madapps/.filebrowser.db",
-  "log": "stdout",
-  "username": "admin",
-  "password": "password"
-}
-EOF
-fi
-
-echo "Starting File Browser in the background..."
-filebrowser -c "$FILEBROWSER_CONFIG" &
-
-echo "Starting Zasper WebApp in the background..."
-zasper-webapp &
 
 echo "##########################################"
 echo "### STEP 4/4: Starting ComfyUI         ###"

@@ -9,8 +9,6 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV IMAGEIO_FFMPEG_EXE=/usr/bin/ffmpeg
-ENV FILEBROWSER_CONFIG=/workspace/madapps/.filebrowser.json
-
 # Update and install minimal dependencies, CUDA, and common tools
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -53,17 +51,9 @@ RUN apt-get update && \
     && rm cuda-keyring_1.1-1_all.deb \
     && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
 
-# Install FileBrowser
-RUN curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
-
 # Set CUDA environment variables
 ENV PATH=/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH:-}
-
-# Install Zasper webapp
-RUN wget https://github.com/zasper-io/zasper/releases/download/v0.1.0-alpha/zasper-webapp-linux-amd64.tar.gz \
-    && tar xf zasper-webapp-linux-amd64.tar.gz -C /usr/local/bin \
-    && rm zasper-webapp-linux-amd64.tar.gz
 
 # Install Jupyter with Python kernel
 RUN pip install jupyter virtualenv uv
@@ -78,15 +68,17 @@ RUN mkdir -p /workspace/madapps
 WORKDIR /workspace/madapps
 
 # Expose ports
-EXPOSE 8187 22 8048 8080
+EXPOSE 8187 22
 
 # Copy and set up start script
 COPY --from=downloader /wheels /wheels
 COPY start.sh /start.sh
+RUN sed -i 's/\r$//' /start.sh
 RUN chmod +x /start.sh
 
 # Set Python 3.12 as default
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
     update-alternatives --set python3 /usr/bin/python3.12
 
+ENTRYPOINT ["/start.sh"]
 ENTRYPOINT ["/start.sh"]

@@ -26,8 +26,6 @@ Choose your template:
   - Regular: CUDA 12.4 with stable PyTorch
   - RTX 5090: CUDA 12.8 with PyTorch Nightly (optimized for latest NVIDIA GPUs)
 - 🔧 Built-in tools:
-  - FileBrowser for easy file management (port 8080)
-  - Zasper (Jupiter Replacement) (port 8048)
   - SSH access
 - 🎨 Pre-installed custom nodes:
   - ComfyUI-Manager
@@ -41,8 +39,6 @@ Choose your template:
 ## Ports
 
 - `8187`: ComfyUI web interface
-- `8080`: FileBrowser interface
-- `8048`: Zasper file access
 - `22`: SSH access
 
 ## Custom Arguments
@@ -57,7 +53,6 @@ You can customize ComfyUI startup arguments by editing `/workspace/madapps/comfy
 
 - `/workspace/madapps/ComfyUI`: Main ComfyUI installation
 - `/workspace/madapps/comfyui_args.txt`: Custom arguments file
-- `/workspace/madapps/filebrowser.db`: FileBrowser database
 
 ## License
 
