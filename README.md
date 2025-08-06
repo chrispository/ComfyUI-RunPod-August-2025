@@ -1,6 +1,6 @@
-# Better ComfyUI Slim on RunPod - August 2025 Version + Instructions for Newbies
+# Better ComfyUI Slim on RunPod - August 2025 Version + Manager + Crystools + Instructions for Newbies
 
-This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was having various issues getting it to run in August 2025, so this version is hardcoded with a working dependency list as of 8/5/2025, and lots of debugging info in the console logs if you run into any issues.
+This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was having various issues getting it to run in August 2025, so this version is hardcoded with a working dependency list as of 8/5/2025, and lots of debugging info in the console logs if you run into any issues. The Crystools installation still doesn't seem correct - you will want to go to the Comfy Manager and reinstall Crystools. 
 
 The original version had a 5090 version - I do not. This is for non-5090 CUDA devices like A100s, H100s, H200s, B200s, etc etc. The original version also had a File Browser and Zasper, those have also been left out.
 
