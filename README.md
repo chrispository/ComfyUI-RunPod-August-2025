@@ -4,7 +4,7 @@ This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was
 
 The original version had a 5090 version - I do not. This is for non-5090 CUDA devices like A100s, H100s, H200s, B200s, etc etc. The original version also had a File Browser and Zasper, those have also been left out.
 
-After ComfyUI boots up, RunPod still needs a few minutes for ComfyUI. If you see the message "Using pytorch attention" - just wait about 2 minutes. The final message you will get from the Container Log confirming it's ready is this: "To see the GUI go to: http://0.0.0.0:8188"
+After ComfyUI boots up, RunPod still needs a few minutes until you can access it via the web. If you see the message "Using pytorch attention" - just wait about 2 minutes. The final message you will get from the Container Log confirming it's ready is this: "To see the GUI go to: http://0.0.0.0:8188"
 
 I had a lot of questions about downloading and storing models. Originally I was trying to use Cloudflare R2 as storage, but ultimately I could not figure it out. Doing the storage via RunPod makes things a lot easier. Start by making a Network Volume with about 150 GB. You will need to know which sort of GPU you are planning on using because each storage location has certain machines available to it with the storage. In my case I wanted to use A100s, so I chose the Kansas location as that's where the most machines were. 
 
