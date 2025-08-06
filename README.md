@@ -1,4 +1,4 @@
-# Better ComfyUI Slim - August 2025 Version + Instructions for Newbies
+# Better ComfyUI Slim on RunPod - August 2025 Version + Instructions for Newbies
 
 This is a fork of kodxana's original Dockerfiles for a slim ComfyUI build. I was having various issues getting it to run in August 2025, so this version is hardcoded with a working dependency list as of 8/5/2025, and lots of debugging info in the console logs if you run into any issues.
 
