@@ -48,6 +48,19 @@ $PIP_EXECUTABLE install PyYAML torchsde
 
 # Install dependencies for custom nodes
 CUSTOM_NODES_DIR="$COMFYUI_DIR/custom_nodes"
+
+# Clone ComfyUI-Manager if it doesn't exist
+if [ ! -d "$CUSTOM_NODES_DIR/comfyui-manager" ]; then
+    echo "Cloning ComfyUI-Manager..."
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git "$CUSTOM_NODES_DIR/comfyui-manager"
+fi
+
+# Clone crystools if it doesn't exist
+if [ ! -d "$CUSTOM_NODES_DIR/comfyui-crystools" ]; then
+    echo "Cloning crystools..."
+    git clone https://github.com/crystian/comfyui-crystools.git "$CUSTOM_NODES_DIR/comfyui-crystools"
+fi
+
 if [ -d "$CUSTOM_NODES_DIR" ]; then
     echo "Checking for custom node dependencies..."
     for req_file in $(find "$CUSTOM_NODES_DIR" -name "requirements.txt"); do
