@@ -18,7 +18,7 @@ On the ComfyUI screen, where it shows you what files you are missing - it also s
 
 ## Quick Deploy on RunPod
 
-No quick deploy here because you need to launch/start the process via the Storage page.
+No quick deploy here because you need to launch/start the process via the Storage page. But then you put this: docker.io/unaico/comfypod:latest
 
 ## Ports
 
